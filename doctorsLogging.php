@@ -1,8 +1,10 @@
+<?php session_start(); ?>
 <html>
 	<?php
 		if (isset($_POST["email"]) and isset($_POST["password"]))
 		{
 			$url = "doctorsMain.php";	
+			$_SESSION['email']= $_POST["email"];
 			header("Location: $url");
 		}
 		else 

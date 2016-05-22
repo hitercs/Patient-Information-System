@@ -2,7 +2,7 @@
 	<?php
 		if (isset($_POST["email"]) and isset($_POST["password"]))
 		{
-			$url = "patientsMain.php";
+			$url = "patientsMain.php";	
 			header("Location: $url");
 		}
 		else 
