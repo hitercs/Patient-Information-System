@@ -1,0 +1,9 @@
+<html>
+<header>
+	<?php 
+		var_dump($_GET);
+	?>
+</header>
+<body>
+</body>
+</html>

@@ -32,7 +32,7 @@
           <div class="inner cover">
             <h1 class="cover-heading">Patient Information System</h1>
             <p class="lead">
-              <a href="patients.php" class="btn btn-lg btn-default">Patients</a>
+              <a href="patients_signup.php" class="btn btn-lg btn-default">Patients</a>
 			  <a href="doctors.php" class="btn btn-lg btn-default">Doctors</a>
 			  <a href="nurses.php" class="btn btn-lg btn-default">Nurses</a>
             </p>

@@ -100,10 +100,10 @@
 							echo "<td>".$row["PID"]."</td>";
 							echo "<td>".$row["name"]."</td>";
 							echo "<td>".$row["indate"]."</td>";
-							echo "<td>"."<form action='#' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='view information'>"."</form>"."</td>";
-							echo "<td>"."<form action='#' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write symptom'>"."</form>"."</td>";
-							echo "<td>"."<form action='#' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write diagnosis'>"."</form>"."</td>";
-							echo "<td>"."<form action='#' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write treatment plan'>"."</form>"."</td>";
+							echo "<td>"."<form action='doctors_view_infor.php?pid=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='view information'>"."</form>"."</td>";
+							echo "<td>"."<form action='write_symptom.php?pid=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write symptom'>"."</form>"."</td>";
+							echo "<td>"."<form action='write_diagnosis.php?pid=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write diagnosis'>"."</form>"."</td>";
+							echo "<td>"."<form action='write_treatment.php?pid=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write treatment plan'>"."</form>"."</td>";
 							echo "</tr>";
 						}
 					}
