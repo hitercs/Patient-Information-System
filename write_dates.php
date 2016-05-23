@@ -36,6 +36,15 @@
         die("Connection failed: " . $conn->connect_error);
     }
     //echo "Connected successfully";
+	var_dump($_POST);
+	?>
+	<?php
+		if (isset($_POST['patient_indate']) and isset($_POST['patient_outdate']))
+		{
+			//update the database 
+			$update_sql = "UPDATE tb_patients	SET  tb_patients.outdate='$_POST[patient_outdate].'00:00:00'', tb_patients.indate='$_POST[patient_indate].'00:00:00'' WHERE  tb_patients.PID = $_GET[PID]";
+			$conn->query($update_sql);
+		}
 	?>
 </header>
 <body>
@@ -80,7 +89,7 @@
 			<h3 class="panel-title"><i class="fa fa-tasks"></i>Patients basic information</h3>
 		</div>
 		<div class="panel-body">
-			<form class="margin-bottom-40" role="form">
+			<form class="margin-bottom-40" role="form" action="<?php echo $_SERVER['PHP_SELF']."?PID=$_GET[PID]";?>" method="post">
 				<?php
 					// query processing 
 					$sql = "SELECT tb_patients.name, tb_patients.age, tb_patients.indate, tb_patients.outdate FROM tb_patients WHERE tb_patients.PID = $_GET[PID]";
@@ -91,19 +100,19 @@
 						{
 							echo "<div class='form-group'>";
 							echo "<label for='patient_name'>Name</label>";
-							echo "<input type='text' class='form-control' id='patient_name' value='$row[name]'>";
+							echo "<input type='text' class='form-control' id='patient_name' value='$row[name]' readonly='readonly'>";
 							echo "</div>";
 							echo "<div class='form-group'>";
 							echo "<label for='patient_age'>Age</label>";
-							echo "<input type='text' class='form-control' id='patient_age' value='$row[age]'>";
+							echo "<input type='text' class='form-control' id='patient_age' value='$row[age]' readonly='readonly'>";
 							echo "</div>";
 							echo "<div class='form-group'>";
 							echo "<label for='patient_indate'>indate</label>";
-							echo "<input type='text' id='patient_indate' class='form-control' value='$row[indate]'>";
+							echo "<input type='text' id='patient_indate' name='patient_indate' class='form-control' value='$row[indate]'>";
 							echo "</div>";
 							echo "<div class='form-group'>";
 							echo "<label for='patient_outdate'>outdate</label>";
-							echo "<input type='text' id='patient_outdate' class='form-control' value='$row[outdate]'>";
+							echo "<input type='text' id='patient_outdate' name='patient_outdate' class='form-control' value='$row[outdate]'>";
 							echo "</div>";
 						}
 					}
