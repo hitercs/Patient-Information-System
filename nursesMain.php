@@ -91,7 +91,7 @@
 					$result = $conn->query($sql);
 					if ($result->num_rows > 0)
 					{
-						$n = 0;
+						$n = 1;
 						//patients list
 						while($row = $result->fetch_assoc())
 						{
@@ -100,7 +100,8 @@
 							echo "<td>".$row["PID"]."</td>";
 							echo "<td>".$row["name"]."</td>";
 							echo "<td>".$row["indate"]."</td>";
-							echo "<td>"."<form action='#' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write nursing records'>"."</form>"."</td>";
+							echo "<td>"."<form action='nursing_records.php?PID=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write nursing records'>"."</form>"."</td>";
+							echo "<td>"."<form action='write_dates.php?PID=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write dates'>"."</form>"."</td>";
 							echo "</tr>";
 						}
 					}
