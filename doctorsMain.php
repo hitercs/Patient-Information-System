@@ -37,7 +37,9 @@
 			}
 			else
 			{
+				echo "</br>";
 				echo "No Patients~~";
+				echo "</br";
 			}
 			echo "Connected Close";
 			$conn->close();
