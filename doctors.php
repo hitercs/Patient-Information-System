@@ -9,7 +9,6 @@
 
     <!-- Custom styles for this template -->
     <link href="mycss/signin.css" rel="stylesheet">
-
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="myjs/ie-emulation-modes-warning.js"></script>
@@ -20,6 +19,7 @@
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </header>
+<body>
     <div class="container">
       <form class="form-signin" action="doctorsLogging.php" method="post">
         <h2 class="form-signin-heading">Welcome to Patients information System!</h2>
@@ -35,4 +35,5 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
     </div> <!-- /container -->
+</body>
 </html>

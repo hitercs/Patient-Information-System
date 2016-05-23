@@ -9,10 +9,11 @@
     <link href="bootstrap-3.3.5-dist/css/bootstrap-theme.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
     <link href="mycss/theme.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="mycss/dashboard.css" rel="stylesheet">
 	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="myjs/ie-emulation-modes-warning.js"></script>
-	<h1>Doctors Main Page </h1>
 	<?php
 		if (!isset($_SESSION["email"]))
 		{
@@ -32,14 +33,46 @@
 			{
 				die("Connection failed: " . $conn->connect_error);
 			}
-			echo "Connected successfully";
+			//echo "Connected successfully";
 		}
 	?>
 </header>
-<body>	
-	<div class="page-header">
-        <h1>My patients</h1>
-    </div>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Patients Information System</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+			<li>
+				<a href="#">
+				<?php
+					if (isset($_SESSION['email']))
+				      {
+							echo "hello, ". $_SESSION['email'];
+					  }
+					  else
+					  {
+							echo "hello, Guest";
+					  }
+				?>
+				</a>
+			</li>
+          </ul>
+        </div>
+      </div>
+    </nav>	
 	<div class="row">
         <div class="col-md-6">
           <table class="table table-striped">
@@ -58,8 +91,8 @@
 					$result = $conn->query($sql);
 					if ($result->num_rows > 0)
 					{
-						echo "Patients ID:" . "</br>";
 						$n = 0;
+						//patients list
 						while($row = $result->fetch_assoc())
 						{
 							echo "<tr>";
@@ -67,6 +100,10 @@
 							echo "<td>".$row["PID"]."</td>";
 							echo "<td>".$row["name"]."</td>";
 							echo "<td>".$row["indate"]."</td>";
+							echo "<td>"."<form action='#' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='view information'>"."</form>"."</td>";
+							echo "<td>"."<form action='#' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write symptom'>"."</form>"."</td>";
+							echo "<td>"."<form action='#' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write diagnosis'>"."</form>"."</td>";
+							echo "<td>"."<form action='#' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write treatment plan'>"."</form>"."</td>";
 							echo "</tr>";
 						}
 					}
