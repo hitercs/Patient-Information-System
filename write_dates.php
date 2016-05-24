@@ -36,13 +36,21 @@
         die("Connection failed: " . $conn->connect_error);
     }
     //echo "Connected successfully";
-	var_dump($_POST);
+	?>
+	<?php
+		function time_format_convert($time1)
+		{
+			$tmp = explode("/", $time1);
+			return $tmp[2].'-'.$tmp[0].'-'.$tmp[1];
+		}
 	?>
 	<?php
 		if (isset($_POST['patient_indate']) and isset($_POST['patient_outdate']))
 		{
 			//update the database 
-			$update_sql = "UPDATE tb_patients	SET  tb_patients.outdate='$_POST[patient_outdate].'00:00:00'', tb_patients.indate='$_POST[patient_indate].'00:00:00'' WHERE  tb_patients.PID = $_GET[PID]";
+			$new_indate = time_format_convert($_POST['patient_indate']);
+			$new_outdate = time_format_convert($_POST['patient_outdate']);
+			$update_sql = "UPDATE tb_patients	SET  tb_patients.outdate='$new_outdate', tb_patients.indate='$new_indate' WHERE  tb_patients.PID = $_GET[PID]";
 			$conn->query($update_sql);
 		}
 	?>
