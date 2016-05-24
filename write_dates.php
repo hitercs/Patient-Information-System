@@ -48,8 +48,14 @@
 		if (isset($_POST['patient_indate']) and isset($_POST['patient_outdate']))
 		{
 			//update the database 
-			$new_indate = time_format_convert($_POST['patient_indate']);
-			$new_outdate = time_format_convert($_POST['patient_outdate']);
+			if (strpos($_POST['patient_indate'], '/'))
+				$new_indate = time_format_convert($_POST['patient_indate']);
+			else
+				$new_indate = $_POST['patient_indate'];
+			if (strpos($_POST['patient_outdate'], '/'))
+				$new_outdate = time_format_convert($_POST['patient_outdate']);
+			else
+				$new_outdate = $_POST['patient_outdate'];
 			$update_sql = "UPDATE tb_patients	SET  tb_patients.outdate='$new_outdate', tb_patients.indate='$new_indate' WHERE  tb_patients.PID = $_GET[PID]";
 			$conn->query($update_sql);
 		}
