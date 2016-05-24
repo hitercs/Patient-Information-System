@@ -13,15 +13,64 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="myjs/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	<style type="text/css">
+		p {
+				text-align: center
+		  }
+	</style>
+	<script type='text/javascript'>
+		var timePeriodInMs = 5000;
+		setTimeout(function() 
+		{ 
+			document.getElementById("texttohide").style.display = "none"; 
+		}, 
+		timePeriodInMs);
+	</script>
+	<?php
+	    $serverName = "573dc08a9d3d2.bj.cdb.myqcloud.com";
+		$serverPort = "14376";
+		$password = "patient+infor";
+		$username = "root";
+		$db_name = "test";
+		$conn = new mysqli($serverName, $username, $password, $db_name, $serverPort);
+		if ($conn->connect_error)
+		{
+			die("Connection failed: " . $conn->connect_error);
+		}
+		else
+		{
+			if (isset($_POST['name']) and isset($_POST['email']) and isset($_POST['password']))
+			{
+				$secure_password = substr(hash("sha256", $_POST['password']), 0, 15);
+				$insert_sql = "INSERT INTO tb_patients (name, email, password)"."VALUES ('$_POST[name]', '$_POST[email]', '$secure_password')";
+				$conn->query($insert_sql);
+				header("Location: patients.php");
+			}	
+		}
+		//$conn->close();
+	?>
+	<?php
+		if (isset($_POST['email']) and isset($_POST['password']))
+		{
+			$search_sql = "SELECT tb_patients.password FROM tb_patients WHERE tb_patients.email='$_POST[email]'";
+			$result = $conn->query($search_sql);
+			if ($result->num_rows > 0)
+			{
+				$row = $result->fetch_assoc();
+				if ($row['password'] == substr(hash("sha256", $_POST['password']), 0, 15))
+				{
+					header("Location: patientsMain.php");
+				}
+				else
+				{
+					echo "<p id='texttohide'><font color='red'>"."password wrong, enter again!"."</font></p>";
+				}
+			}
+		}
+	?>
 </header>
     <div class="container">
-      <form class="form-signin" action="patientsLogging.php" method="post">
+      <form class="form-signin" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
         <h2 class="form-signin-heading">Welcome to Patients information System!</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email address" required autofocus>
