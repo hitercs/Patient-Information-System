@@ -60,7 +60,7 @@
 			  <ul class="nav">
 				<li><a href="fill_patients_infor.php"> Fill basic information</a></li>
 				<li><a href="view_diagnosis.php">View diagnosis</a></li>
-				<li><a href="#">View treatment plan</a></li>
+				<li><a href="view_treatment_plan.php">View treatment plan</a></li>
 			  </ul>
 			</div>
 		  </div>
