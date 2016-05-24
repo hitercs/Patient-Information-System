@@ -1,30 +1,21 @@
 <?php
 	session_start();
-?>
+?>	
 <html>
 <header>
 	<!-- Bootstrap theme -->
     <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="bootstrap-3.3.5-dist/css/bootstrap.css" rel="stylesheet">
 	<!-- Bootstrap theme -->
     <link href="bootstrap-3.3.5-dist/css/bootstrap-theme.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
     <link href="mycss/theme.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="mycss/dashboard.css" rel="stylesheet">
+	
 	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="myjs/ie-emulation-modes-warning.js"></script>
-	<link rel="stylesheet" href="mycss/jquery-ui.css">
-	<script src="myjs/jquery-1.10.2.js"></script>
-	<script src="myjs/jquery-ui.js"></script>
-	<script>
-		$(function() {
-			$( "#patient_indate" ).datepicker();
-		});
-		$(function() {
-			$( "#patient_outdate" ).datepicker();
-		});
-	</script>
 	<?php
 		$serverName = "573dc08a9d3d2.bj.cdb.myqcloud.com";
 		$serverPort = "14376";
@@ -36,38 +27,7 @@
 		{
 			die("Connection failed: " . $conn->connect_error);
 		}
-		//echo "Connected successfully";
-	?>
-	<?php
-		if (isset($_POST['patient_age']))
-		{
-			$update_sql = "UPDATE tb_patients SET age=$_POST[patient_age] WHERE tb_patients.email = '$_SESSION[email]'";
-			$conn->query($update_sql);
-		}
-		if (isset($_POST['patient_addr']))
-		{
-			$update_sql = "UPDATE tb_patients SET addr='$_POST[patient_addr]' WHERE tb_patients.email = '$_SESSION[email]'";
-			$conn->query($update_sql);		
-		}
-		if (isset($_POST['isMarry']))
-		{
-			$update_sql = "UPDATE tb_patients SET Married=$_POST[isMarry] WHERE tb_patients.email = '$_SESSION[email]'";
-			$conn->query($update_sql);				
-		}
-		if (isset($_POST['gender']))
-		{
-			$update_sql = "UPDATE tb_patients SET gender=$_POST[gender] WHERE tb_patients.email = '$_SESSION[email]'";
-			$conn->query($update_sql);					
-		}
-		if (isset($_POST['docs']))
-		{
-			$update_sql = "UPDATE tb_patients SET Did=$_POST[docs] WHERE tb_patients.email = '$_SESSION[email]'";
-			$conn->query($update_sql);		
-		}
-		if (isset($_POST['patient_age']) or isset($_POST['patient_addr']) or isset($_POST['isMarry']) or isset($_POST['gender']) or isset($_POST['docs']))
-		{
-			header("Location: patientsMain.php");
-		}
+		//$conn->close();
 	?>
 </header>
 <body>
@@ -105,13 +65,13 @@
           </ul>
         </div>
       </div>
-    </nav>
+    </nav>	
 	<!-- Basic Form -->
 	<div class="panel panel-blue margin-bottom-40">
 		<div class="panel-body">
-			<form class="margin-bottom-40" role="form" action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
+			<form class="margin-bottom-40" role="form" method="post">
 				<?php
-					$sql = "SELECT * FROM tb_patients WHERE tb_patients.email = '$_SESSION[email]'";
+					$sql = "SELECT tb_patients.name, tb_diagnosis.Test, tb_diagnosis.DiseaseCate, tb_diagnosis.suggestion, tb_diagnosis.MedicalHis, tb_diagnosis.recorded_on FROM tb_patients, tb_diagnosis WHERE tb_patients.email = '$_SESSION[email]' and tb_diagnosis.Pid=tb_patients.PID";
 					$result = $conn->query($sql);
 					if ($result->num_rows > 0)
 					{
@@ -140,30 +100,16 @@
 						echo "<label for='patient_addr'>Addr</label>";
 						echo "<input type='text' class='form-control' id='patient_addr' value='$row[addr]' name='patient_addr'>";
 						echo "</div>";
-						echo "<div class='form-group'>";
+						echo "<div class='form-group' value='$row[Married]'>";
 						echo "<label for='isMarry'>isMarry</label>";
-						echo "<select name='isMarry' id='isMarry' value='$row[Married]'>"."<option value='0'>yes</option>"."<option value='1'>no</option>"."</select>";
+						echo "<select name='isMarry' id='isMarry'>"."<option value='0'>yes</option>"."<option value='1'>no</option>"."</select>";
 						echo "</div>";
-						echo "<div class='form-group'>";
+						echo "<div class='form-group' value='$row[gender]'>";
 						echo "<label for='gender'>Gender</label>";
-						echo "<select name='gender' id='gender' value='$row[gender]'>"."<option value='0'>M</option>"."<option value='1'>F</option>"."<option value='2'>Other</option>"."</select>";
+						echo "<select name='gender' id='gender'>"."<option value='0'>M</option>"."<option value='1'>F</option>"."<option value='2'>Other</option>"."</select>";
 						echo "</div>";
-						$doctors_sql = "SELECT * FROM tb_doctors WHERE 1";
-						$re = $conn->query($doctors_sql);						
-						if ($re->num_rows > 0)
-						{
-							echo "<div class='form-group'>";
-							echo "<label for='docs'>primary doctors</label>";
-							echo "<select name='docs' id='docs' value='$row[Did]'>";
-							while($row_ = $re->fetch_assoc())
-							{
-								echo "<option value='$row_[Did]'>$row_[name]</option>";
-							}
-							echo "</select>";
-						}
 					}
 				?>
-				<button type="submit" class="btn-u btn-u-blue">Submit</button>
 			</form>
 		</div>
 	</div>	
