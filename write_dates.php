@@ -71,7 +71,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Patients Information System</a>
+          <a class="navbar-brand" href="nursesMain.php">Patients Information System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -99,9 +99,6 @@
     </nav>	
 	<!-- Basic Form -->
 	<div class="panel panel-blue margin-bottom-40">
-		<div class="panel-heading">
-			<h3 class="panel-title"><i class="fa fa-tasks"></i>Patients basic information</h3>
-		</div>
 		<div class="panel-body">
 			<form class="margin-bottom-40" role="form" action="<?php echo $_SERVER['PHP_SELF']."?PID=$_GET[PID]";?>" method="post">
 				<?php

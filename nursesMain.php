@@ -14,6 +14,21 @@
 	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="myjs/ie-emulation-modes-warning.js"></script>
+	<script type='text/javascript'>
+	var timePeriodInMs = 5000;
+	setTimeout(function() 
+	{ 
+		document.getElementById("texttohide").style.display = "none"; 
+	}, 
+	timePeriodInMs);
+	</script>
+		<?php
+			function time_format_convert($time1)
+			{
+				$tmp = explode("/", $time1);
+				return $tmp[2].'-'.$tmp[0].'-'.$tmp[1];
+			}
+		?>
 		<?php
 		if (!isset($_SESSION["email"]))
 		{
@@ -35,6 +50,18 @@
 			}
 			//echo "Connected successfully";
 		}
+		//static $recordsn = 0;
+		if (isset($_GET['PID']) and isset($_GET['NID']))
+		{
+			//save nursing records
+			if (strpos($_POST['date'], '/'))
+				$new_date = time_format_convert($_POST['date']);
+			else
+				$new_date = $_POST['date'];
+			$insert_sql = "INSERT INTO tb_nursingrecord (evaluation, State, Nid, Pid, date)"."VALUES ('$_POST[nurses_evaluation]', '$_POST[patient_State]', $_GET[NID], $_GET[PID], '$new_date')";
+			$conn->query($insert_sql);
+			echo "<p id='texttohide'><font color='green'>"."save nursing records successfully"."</font></p>";
+		}	
 	?>
 </header>
 <body>
@@ -47,7 +74,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Patients Information System</a>
+          <a class="navbar-brand" href="nursesMain.php">Patients Information System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -81,13 +108,13 @@
                 <th>#</th>
                 <th>Patients ID</th>
                 <th>Patients name</th>
-                <th>In date</th>
+                <th>Admission date</th>
               </tr>
             </thead>
             <tbody>
 				<?php
 					// query processing 
-					$sql = "SELECT tb_patients.PID, tb_patients.name, tb_patients.indate FROM tb_nurses, tb_patients WHERE tb_nurses.Nid = tb_patients.Nid AND tb_nurses.email = '$_SESSION[email]'";
+					$sql = "SELECT tb_patients.PID, tb_patients.name, tb_patients.indate, tb_nurses.Nid FROM tb_nurses, tb_patients WHERE tb_nurses.Nid = tb_patients.Nid AND tb_nurses.email = '$_SESSION[email]'";
 					$result = $conn->query($sql);
 					if ($result->num_rows > 0)
 					{
@@ -100,7 +127,7 @@
 							echo "<td>".$row["PID"]."</td>";
 							echo "<td>".$row["name"]."</td>";
 							echo "<td>".$row["indate"]."</td>";
-							echo "<td>"."<form action='nursing_records.php?PID=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write nursing records'>"."</form>"."</td>";
+							echo "<td>"."<form action='nursing_records.php?PID=$row[PID]&NID=$row[Nid]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write nursing records'>"."</form>"."</td>";
 							echo "<td>"."<form action='write_dates.php?PID=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write dates'>"."</form>"."</td>";
 							echo "</tr>";
 						}
