@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <html>
 <header>
 	<meta charset="utf-8">
@@ -6,7 +9,6 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 	 <!-- Bootstrap core CSS -->
     <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="mycss/signin.css" rel="stylesheet">
 
@@ -37,29 +39,20 @@
 		{
 			die("Connection failed: " . $conn->connect_error);
 		}
-		else
-		{
-			if (isset($_POST['name']) and isset($_POST['email']) and isset($_POST['password']))
-			{
-				$secure_password = substr(hash("sha256", $_POST['password']), 0, 15);
-				$insert_sql = "INSERT INTO tb_patients (name, email, password)"."VALUES ('$_POST[name]', '$_POST[email]', '$secure_password')";
-				$conn->query($insert_sql);
-				header("Location: patients.php");
-			}	
-		}
 		//$conn->close();
 	?>
 	<?php
 		if (isset($_POST['email']) and isset($_POST['password']))
 		{
-			$search_sql = "SELECT tb_patients.password FROM tb_patients WHERE tb_patients.email='$_POST[email]'";
+			$search_sql = "SELECT tb_patients.password, tb_patients.PID FROM tb_patients WHERE tb_patients.email='$_POST[email]'";
 			$result = $conn->query($search_sql);
 			if ($result->num_rows > 0)
 			{
 				$row = $result->fetch_assoc();
 				if ($row['password'] == substr(hash("sha256", $_POST['password']), 0, 15))
 				{
-					header("Location: patientsMain.php");
+					$_SESSION['email'] = $_POST['email'];
+					header("Location: patientsMain.php?PID=$row[PID]");
 				}
 				else
 				{
@@ -67,6 +60,7 @@
 				}
 			}
 		}
+		$conn->close();
 	?>
 </header>
     <div class="container">
@@ -83,5 +77,5 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
-    </div> <!-- /container -->
+    </div>	
 </html>
