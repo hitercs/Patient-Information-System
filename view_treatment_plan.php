@@ -24,6 +24,11 @@
 		}
 		//$conn->close();
 	?>
+	<script>
+		$(function() {
+			$( "#recorded_on" ).datepicker();
+		});
+	</script>
 </header>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -66,7 +71,7 @@
 		<div class="panel-body">
 			<form class="margin-bottom-40" role="form" method="post">
 				<?php
-					$sql = "SELECT tb_treatment.InHospital, tb_treatment.IsOperation, tb_treatment.Remarks, tb_treatment.recorded_on FROM tb_patients, tb_treatment WHERE tb_patients.email = '$_SESSION[email]' and tb_treatment.patient_id=tb_patients.PID";
+					$sql = "SELECT tb_patients.name, tb_treatment.InHospital, tb_treatment.IsOperation, tb_treatment.Remarks, tb_treatment.recorded_on FROM tb_patients, tb_treatment WHERE tb_patients.email = '$_SESSION[email]' and tb_treatment.patient_id=tb_patients.PID";
 					$result = $conn->query($sql);
 					if ($result->num_rows > 0)
 					{
@@ -76,20 +81,22 @@
 						echo "<input type='text' class='form-control' id='patient_name' value='$row[name]' readonly='readonly'>";
 						echo "</div>";
 						echo "<div class='form-group'>";
-						echo "<label for='patient_test'>Test</label>";
-						echo "<input type='text' class='form-control' id='patient_test' value='$row[Test]' readonly='readonly'>";
+						echo "<label for='patient_inhospital'>In Hospital</label>";
+						if ($row['InHospital'] == 0)
+							echo "<input type='checkbox' class='form-control' id='patient_inhospital' readonly='readonly' checked>"."Yes"."</input>";
+						else if ($row['InHospital'] == 1)
+							echo "<input type='checkbox' class='form-control' id='patient_inhospital' readonly='readonly' checked>"."No"."</input>";
 						echo "</div>";
 						echo "<div class='form-group'>";
-						echo "<label for='patient_DiseaseCate'>Disease Category</label>";
-						echo "<input type='text' id='patient_DiseaseCate' name='patient_DiseaseCate' class='form-control' value='$row[DiseaseCate]' readonly='readonly'>";
+						echo "<label for='IsOperation'>Need Operation</label>";
+						if ($row['IsOperation'] == 0)
+							echo "<input type='checkbox' class='form-control' id='IsOperation' readonly='readonly' checked>"."Yes"."</input>";
+						else if ($row['IsOperation'] == 1)
+							echo "<input type='checkbox' class='form-control' id='IsOperation' readonly='readonly' checked>"."No"."</input>";
 						echo "</div>";
 						echo "<div class='form-group'>";
-						echo "<label for='suggestion'>Suggestion</label>";
-						echo "<input type='text' id='suggestion' name='suggestion' class='form-control' value='$row[suggestion]' readonly='readonly'>";
-						echo "</div>";
-						echo "<div class='form-group'>";
-						echo "<label for='MedicalHis'>Medical Histroy</label>";
-						echo "<input type='text' class='form-control' id='MedicalHis' value='$row[MedicalHis]' name='MedicalHis' readonly='readonly'>";
+						echo "<label for='doctors_Remarks'>Doctors remarks</label>";
+						echo "<input type='text' id='doctors_Remarks' name='doctors_Remarks' class='form-control' value='$row[Remarks]' readonly='readonly'>";
 						echo "</div>";
 						echo "<div class='form-group'>";
 						echo "<label for='recorded_on'>Time</label>";

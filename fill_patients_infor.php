@@ -142,12 +142,40 @@
 						echo "</div>";
 						echo "<div class='form-group'>";
 						echo "<label for='isMarry'>isMarry</label>";
-						echo "<select name='isMarry' id='isMarry' value='$row[Married]'>"."<option value='0'>yes</option>"."<option value='1'>no</option>"."</select>";
-						echo "</div>";
+						echo "<select name='isMarry' id='isMarry' value='$row[Married]'>";
+						if ($row['Married'] == 0)
+						{
+							echo "<option value='0' selected>no</option>";
+							echo "<option value='1'>yes</option>";
+						}
+						else
+						{
+							echo "<option value='0'>no</option>";
+							echo "<option value='1' selected>yes</option>";
+						}	
+						echo "</select>"."</div>";
 						echo "<div class='form-group'>";
 						echo "<label for='gender'>Gender</label>";
-						echo "<select name='gender' id='gender' value='$row[gender]'>"."<option value='0'>M</option>"."<option value='1'>F</option>"."<option value='2'>Other</option>"."</select>";
-						echo "</div>";
+						echo "<select name='gender' id='gender'>";
+						if ($row['gender'] == 0)
+						{
+							echo "<option value='0' selected>M</option>";
+							echo "<option value='1'>F</option>";
+							echo "<option value='2'>Other</option>";
+						}	
+						else if($row['gender'] == 1)
+						{
+							echo "<option value='0'>M</option>";
+							echo "<option value='1' selected>F</option>";
+							echo "<option value='2'>Other</option>";
+						}	
+						else
+						{							
+							echo "<option value='0'>M</option>";
+							echo "<option value='1'>F</option>";
+							echo "<option value='2' selected>Other</option>";
+						}
+						echo "</select>"."</div>";
 						$doctors_sql = "SELECT * FROM tb_doctors WHERE 1";
 						$re = $conn->query($doctors_sql);						
 						if ($re->num_rows > 0)
