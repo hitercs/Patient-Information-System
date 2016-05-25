@@ -64,7 +64,12 @@
 			$update_sql = "UPDATE tb_patients SET Did=$_POST[docs] WHERE tb_patients.email = '$_SESSION[email]'";
 			$conn->query($update_sql);		
 		}
-		if (isset($_POST['patient_age']) or isset($_POST['patient_addr']) or isset($_POST['isMarry']) or isset($_POST['gender']) or isset($_POST['docs']))
+		if (isset($_POST['nurses']))
+		{
+			$update_sql = "UPDATE tb_patients SET Nid=$_POST[nurses] WHERE tb_patients.email = '$_SESSION[email]'";
+			$conn->query($update_sql);		
+		}
+		if (isset($_POST['patient_age']) or isset($_POST['patient_addr']) or isset($_POST['isMarry']) or isset($_POST['gender']) or isset($_POST['docs']) or isset($_POST['nurses'])) 
 		{
 			header("Location: patientsMain.php");
 		}
@@ -186,6 +191,19 @@
 							while($row_ = $re->fetch_assoc())
 							{
 								echo "<option value='$row_[Did]'>$row_[name]</option>";
+							}
+							echo "</select>";
+						}
+						$nurses_sql = "SELECT * FROM tb_nurses WHERE 1";
+						$re = $conn->query($nurses_sql);
+						if ($re->num_rows > 0)
+						{
+							echo "<div class='form-group'>";
+							echo "<label for='nurses'>primary nurses</label>";
+							echo "<select name='nurses' id='nurses'>";
+							while($row_ = $re->fetch_assoc())
+							{
+								echo "<option value='$row_[Nid]'>$row_[name]</option>";
 							}
 							echo "</select>";
 						}
