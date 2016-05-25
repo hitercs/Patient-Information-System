@@ -190,7 +190,7 @@
 							echo "<select name='docs' id='docs' value='$row[Did]'>";
 							while($row_ = $re->fetch_assoc())
 							{
-								echo "<option value='$row_[Did]'>$row_[name]</option>";
+								echo "<option value='$row_[Did]'>$row_[name]($row_[specname])</option>";
 							}
 							echo "</select>";
 						}
@@ -203,7 +203,7 @@
 							echo "<select name='nurses' id='nurses'>";
 							while($row_ = $re->fetch_assoc())
 							{
-								echo "<option value='$row_[Nid]'>$row_[name]</option>";
+								echo "<option value='$row_[Nid]'>$row_[name]($row_[specname], $row_[pos])</option>";
 							}
 							echo "</select>";
 						}
