@@ -47,7 +47,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Patients Information System</a>
+          <a class="navbar-brand" href="doctorsMain.php">Patients Information System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -100,10 +100,10 @@
 							echo "<td>".$row["PID"]."</td>";
 							echo "<td>".$row["name"]."</td>";
 							echo "<td>".$row["indate"]."</td>";
-							echo "<td>"."<form action='doctors_view_infor.php?pid=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='view information'>"."</form>"."</td>";
-							echo "<td>"."<form action='write_symptom.php?pid=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write symptom'>"."</form>"."</td>";
-							echo "<td>"."<form action='write_diagnosis.php?pid=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write diagnosis'>"."</form>"."</td>";
-							echo "<td>"."<form action='write_treatment.php?pid=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write treatment plan'>"."</form>"."</td>";
+							echo "<td>"."<form action='doctors_view_infor.php?PID=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='view information'>"."</form>"."</td>";
+							echo "<td>"."<form action='write_symptom.php?PID=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write symptom'>"."</form>"."</td>";
+							echo "<td>"."<form action='write_diagnosis.php?PID=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write diagnosis'>"."</form>"."</td>";
+							echo "<td>"."<form action='write_treatment.php?PID=$row[PID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='write treatment plan'>"."</form>"."</td>";
 							echo "</tr>";
 						}
 					}

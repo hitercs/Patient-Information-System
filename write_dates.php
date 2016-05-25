@@ -118,11 +118,11 @@
 							echo "<input type='text' class='form-control' id='patient_age' value='$row[age]' readonly='readonly'>";
 							echo "</div>";
 							echo "<div class='form-group'>";
-							echo "<label for='patient_indate'>indate</label>";
+							echo "<label for='patient_indate'>Admission time</label>";
 							echo "<input type='text' id='patient_indate' name='patient_indate' class='form-control' value='$row[indate]'>";
 							echo "</div>";
 							echo "<div class='form-group'>";
-							echo "<label for='patient_outdate'>outdate</label>";
+							echo "<label for='patient_outdate'>Discharge time</label>";
 							echo "<input type='text' id='patient_outdate' name='patient_outdate' class='form-control' value='$row[outdate]'>";
 							echo "</div>";
 						}
