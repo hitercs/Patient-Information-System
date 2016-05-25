@@ -83,16 +83,16 @@
 						echo "<div class='form-group'>";
 						echo "<label for='patient_inhospital'>In Hospital</label>";
 						if ($row['InHospital'] == 0)
-							echo "<input type='checkbox' class='form-control' id='patient_inhospital' readonly='readonly' checked>"."Yes"."</input>";
-						else if ($row['InHospital'] == 1)
 							echo "<input type='checkbox' class='form-control' id='patient_inhospital' readonly='readonly' checked>"."No"."</input>";
+						else if ($row['InHospital'] == 1)
+							echo "<input type='checkbox' class='form-control' id='patient_inhospital' readonly='readonly' checked>"."Yes"."</input>";
 						echo "</div>";
 						echo "<div class='form-group'>";
 						echo "<label for='IsOperation'>Need Operation</label>";
 						if ($row['IsOperation'] == 0)
-							echo "<input type='checkbox' class='form-control' id='IsOperation' readonly='readonly' checked>"."Yes"."</input>";
-						else if ($row['IsOperation'] == 1)
 							echo "<input type='checkbox' class='form-control' id='IsOperation' readonly='readonly' checked>"."No"."</input>";
+						else if ($row['IsOperation'] == 1)
+							echo "<input type='checkbox' class='form-control' id='IsOperation' readonly='readonly' checked>"."Yes"."</input>";
 						echo "</div>";
 						echo "<div class='form-group'>";
 						echo "<label for='doctors_Remarks'>Doctors remarks</label>";
