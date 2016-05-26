@@ -78,7 +78,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="search_nursing_records.php">Search nursing records</a></li>
             <li><a href="#">Settings</a></li>
             <li><a href="#">Profile</a></li>
             <li><a href="#">Help</a></li>
