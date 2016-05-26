@@ -54,7 +54,7 @@
             <li><a href="patients_search.php">Search Records</a></li>
             <li><a href="#">Settings</a></li>
             <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="index.php">Log out</a></li>
 			<li>
 				<a href="#">
 				<?php

@@ -81,7 +81,7 @@
             <li><a href="search_nursing_records.php">Search nursing records</a></li>
             <li><a href="#">Settings</a></li>
             <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="index.php">Log out</a></li>
 			<li>
 				<a href="#">
 				<?php
