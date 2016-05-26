@@ -121,46 +121,49 @@
               </tr>
             </thead>
 			<tbody>
-				<?php 
-					if (isset($_POST['pname']) and isset($_POST['date']) and ($_POST['pname']!="" or $_POST['date']!=""))
+				<?php
+					$read_sql = "SELECT Nid from tb_nurses where tb_nurses.email='$_SESSION[email]'";
+					$re = $conn->query($read_sql);
+					$row_ = $re->fetch_assoc();				
+					if (isset($_POST['pname']) and isset($_POST['date']))
 					{
 						if ($_POST['pname'] and !$_POST['date'])
 						{
-							$search_sql = "SELECT tb_nursingrecord.ID, tb_patients.PID, tb_nursingrecord.evaluation, tb_patients.name, tb_nursingrecord.State, tb_nursingrecord.date FROM tb_nursingrecord, tb_patients WHERE tb_nursingrecord.Pid = tb_patients.PID and tb_patients.name = '$_POST[pname]'";
+							$search_sql = "SELECT tb_nursingrecord.ID, tb_patients.PID, tb_nursingrecord.evaluation, tb_patients.name, tb_nursingrecord.State, tb_nursingrecord.date FROM tb_nursingrecord, tb_patients WHERE tb_nursingrecord.Pid = tb_patients.PID and tb_patients.name = '$_POST[pname]' AND tb_nursingrecord.Nid = $row_[Nid]";
 							$result = $conn->query($search_sql);
 						}
 						else if (!$_POST['pname'] and $_POST['date'])
 						{
 							$format_date = time_format_convert($_POST['date']);
-							$search_sql = "SELECT tb_nursingrecord.ID, tb_patients.PID, tb_nursingrecord.evaluation, tb_patients.name, tb_nursingrecord.State, tb_nursingrecord.date FROM tb_nursingrecord, tb_patients WHERE tb_nursingrecord.Pid = tb_patients.PID and tb_nursingrecord.date = '$format_date'";
+							$search_sql = "SELECT tb_nursingrecord.ID, tb_patients.PID, tb_nursingrecord.evaluation, tb_patients.name, tb_nursingrecord.State, tb_nursingrecord.date FROM tb_nursingrecord, tb_patients WHERE tb_nursingrecord.Pid = tb_patients.PID and tb_nursingrecord.date = '$format_date' AND tb_nursingrecord.Nid = $row_[Nid]";
 							$result = $conn->query($search_sql);					
 						}
-						else
+						else if ($_POST['pname'] and $_POST['date'])
 						{
 							$format_date = time_format_convert($_POST['date']);
-							$search_sql = "SELECT tb_nursingrecord.ID, tb_patients.PID, tb_nursingrecord.evaluation, tb_patients.name, tb_nursingrecord.State, tb_nursingrecord.date FROM tb_nursingrecord, tb_patients WHERE tb_nursingrecord.Pid = tb_patients.PID and tb_nursingrecord.date = '$format_date' and tb_patients.name = '$_POST[pname]'";
+							$search_sql = "SELECT tb_nursingrecord.ID, tb_patients.PID, tb_nursingrecord.evaluation, tb_patients.name, tb_nursingrecord.State, tb_nursingrecord.date FROM tb_nursingrecord, tb_patients WHERE tb_nursingrecord.Pid = tb_patients.PID and tb_nursingrecord.date = '$format_date' and tb_patients.name = '$_POST[pname]' AND tb_nursingrecord.Nid = $row_[Nid]";
 							$result = $conn->query($search_sql);	
 						}
-					}
-					else 
-					{
-						$search_sql = "SELECT tb_nursingrecord.ID, tb_patients.PID, tb_nursingrecord.evaluation, tb_patients.name, tb_nursingrecord.State, tb_nursingrecord.date FROM tb_nursingrecord, tb_patients WHERE tb_nursingrecord.Pid = tb_patients.PID";
-						$result = $conn->query($search_sql);
-					}
-					if ($result->num_rows > 0)
-					{
-						$m = 1;
-						while ($row = $result->fetch_assoc())
+						else 
 						{
-							echo "<tr>";
-							echo "<td>".$m++."</td>";
-							echo "<td>".$row["PID"]."</td>";
-							echo "<td>".$row["name"]."</td>";
-							echo "<td>".$row["evaluation"]."</td>";
-							echo "<td>".$row["State"]."</td>";
-							echo "<td>".$row['date']."</td>";
-							echo "<td>"."<form action='search_nursing_records.php?NursingID=$row[ID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='Delete this records'>"."</form>"."</td>";
-							echo "</tr>";
+							$search_sql = "SELECT tb_nursingrecord.ID, tb_patients.PID, tb_nursingrecord.evaluation, tb_patients.name, tb_nursingrecord.State, tb_nursingrecord.date FROM tb_nursingrecord, tb_patients WHERE tb_nursingrecord.Pid = tb_patients.PID AND tb_nursingrecord.Nid = $row_[Nid]";
+							$result = $conn->query($search_sql);
+						}
+						if ($result->num_rows > 0)
+						{
+							$m = 1;
+							while ($row = $result->fetch_assoc())
+							{
+								echo "<tr>";
+								echo "<td>".$m++."</td>";
+								echo "<td>".$row["PID"]."</td>";
+								echo "<td>".$row["name"]."</td>";
+								echo "<td>".$row["evaluation"]."</td>";
+								echo "<td>".$row["State"]."</td>";
+								echo "<td>".$row['date']."</td>";
+								echo "<td>"."<form action='search_nursing_records.php?NursingID=$row[ID]' method='post'>"."<input class='btn btn-xs btn-link' type='submit' value='Delete this records'>"."</form>"."</td>";
+								echo "</tr>";
+							}
 						}
 					}
 				?>
